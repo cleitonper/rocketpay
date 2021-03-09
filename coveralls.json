@@ -1,0 +1,21 @@
+{
+  "terminal_options": {
+    "print_files": false
+  },
+  "coverage_options": {
+    "minimum_coverage": 90,
+    "treat_no_relevant_lines_as_covered": true
+  },
+  "skip_files": [
+    "lib/rocketpay/application.ex",
+    "lib/rocketpay/repo.ex",
+    "lib/rocketpay_web.ex",
+    "lib/rocketpay_web/helpers",
+    "lib/rocketpay_web/channels",
+    "lib/rocketpay_web/telemetry.ex",
+    "lib/rocketpay_web/gettext.ex",
+    "lib/rocketpay_web/endpoint.ex",
+    "lib/rocketpay_web/router.ex",
+    "test/support"
+  ]
+}
