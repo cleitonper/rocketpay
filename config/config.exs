@@ -31,6 +31,10 @@ config :rocketpay, :basic_auth,
   username: System.fetch_env!("AUTH_USERNAME"),
   password: System.fetch_env!("AUTH_PASSWORD")
 
+config :rocketpay, Rocketpay.Guardian,
+  issuer: "rocketpay",
+  secret_key: System.fetch_env!("AUTH_SECRET")
+
 # Phoenix
 config :phoenix, :json_library, Jason
 

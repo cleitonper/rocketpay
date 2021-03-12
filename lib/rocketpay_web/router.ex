@@ -11,16 +11,24 @@ defmodule RocketpayWeb.Router do
     plug :basic_auth, Application.compile_env(:rocketpay, :basic_auth)
   end
 
+  pipeline :authenticated do
+    plug Rocketpay.Auth.Pipeline
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   scope "/api", RocketpayWeb do
     pipe_through :api
 
     get "/", HomeController, :index
 
+    post "/auth/login", AuthController, :login
+    post "/auth/logout", AuthController, :logout
+
     post "/users", UsersController, :create
   end
 
   scope "/api", RocketpayWeb do
-    pipe_through [:api, :auth]
+    pipe_through [:api, :authenticated]
 
     get "/users/:id", UsersController, :show
 

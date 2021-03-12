@@ -1,6 +1,6 @@
 defmodule Rocketpay.Setup do
-  import Plug.Conn, only: [put_req_header: 3]
-
+  alias Plug.Conn
+  alias Rocketpay.Guardian
   alias Rocketpay.Accounts.Deposit
   alias Rocketpay.{Repo, User, Account}
 
@@ -25,11 +25,9 @@ defmodule Rocketpay.Setup do
     %{from: from, to: to}
   end
 
-  def auth(conn) do
-    username = Application.get_env(:rocketpay, :basic_auth)[:username]
-    password = Application.get_env(:rocketpay, :basic_auth)[:password]
-    authorization = Plug.BasicAuth.encode_basic_auth(username, password)
-    conn = put_req_header(conn, "authorization", authorization)
+  def auth(%Conn{} = unauthorized) do
+    {:ok, user} = Rocketpay.Fake.create(:user)
+    %Conn{} = conn = Guardian.Plug.sign_in(unauthorized, user)
     %{conn: conn}
   end
 end

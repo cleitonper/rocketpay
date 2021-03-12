@@ -4,6 +4,13 @@ defmodule RocketpayWeb.FallbackController do
   alias Ecto.Changeset
   alias Rocketpay.Account
 
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(RocketpayWeb.ErrorView)
+    |> render("401.json")
+  end
+
   def call(conn, {:error, %Changeset{} = changeset}) do
     conn
     |> put_status(:bad_request)
