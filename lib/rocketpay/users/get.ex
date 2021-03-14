@@ -21,7 +21,7 @@ defmodule Rocketpay.Users.Get do
 
     case user do
       %User{} = user -> {:ok, user}
-      nil -> {:error, "User not found"}
+      nil -> {:error, :not_found}
     end
   end
 

@@ -1,14 +1,14 @@
 defmodule Rocketpay.Users.Show do
   alias Rocketpay.{Repo, User}
 
-  @spec call(Ecto.UUID.t) :: {:ok, User.t} | {:error, String.t}
+  @spec call(Ecto.UUID.t) :: {:ok, User.t} | {:error, :not_found}
   def call(id) do
     case get_user(id) do
       %User{} = user -> {:ok, user}
-      nil -> {:error, "User not found"}
+      nil -> {:error, :not_found}
     end
   rescue
-    Ecto.Query.CastError -> {:error, "User was not found"}
+    Ecto.Query.CastError -> {:error, :not_found}
   end
 
   @spec get_user(Ecto.UUID.t) :: User.t | nil

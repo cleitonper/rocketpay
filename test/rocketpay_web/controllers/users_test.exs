@@ -6,7 +6,7 @@ defmodule RocketpayWeb.UsersControllerTest do
   describe "Controller: Users ⇾" do
     setup [:user, :auth]
 
-    test "should show an user", %{conn: conn, user: user} do
+    test "when the id is valid, should show an user", %{conn: conn, user: user} do
       expected_response = %{
         "id" => user.id,
         "name" => user.name,
@@ -23,6 +23,21 @@ defmodule RocketpayWeb.UsersControllerTest do
         conn
         |> get(Routes.users_path(conn, :show, user.id))
         |> json_response(:ok)
+
+      assert expected_response === response
+    end
+
+    test "when the id is invalid, should return Not Found in the response", %{conn: conn} do
+      expected_response = %{
+        "error" => %{
+          "message" => "Not Found"
+        }
+      }
+
+      response =
+        conn
+        |> get(Routes.users_path(conn, :show, "INVALID_USER_ID"))
+        |> json_response(:not_found)
 
       assert expected_response === response
     end

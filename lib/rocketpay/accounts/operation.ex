@@ -12,7 +12,7 @@ defmodule Rocketpay.Accounts.Operation do
   @type account_type :: :account_for_deposit | :account_for_withdraw
 
   @type response :: {:ok, Account.t} | {:ok, Transaction.t}
-  @type error :: {target::atom, message::String.t}
+  @type error :: {target::atom, message::String.t} | :not_found
 
   @spec call(params::t, type::operation) :: Multi.t
   def call(%{"id" => id, "amount" => amount}, operation) do
@@ -26,11 +26,11 @@ defmodule Rocketpay.Accounts.Operation do
   @spec get_account(Ecto.Repo.t, any, UUID.t) :: {:ok, Account.t} | {:error, error}
   def get_account(repo, _changes, id) do
     case repo.get(Account, id) do
-      nil -> {:error, {:account, "Account not fount!"}}
+      nil -> {:error, :not_found}
       account -> {:ok, account}
     end
   rescue
-    Ecto.Query.CastError -> {:error, {:account, "Account was not found"}}
+    Ecto.Query.CastError -> {:error, :not_found}
   end
 
   @spec update_balance(Ecto.Repo.t, %{atom => Account.t}, Decimal.t, operation) :: {:ok, Account.t} | {:error, error}
