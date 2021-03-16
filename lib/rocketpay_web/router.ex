@@ -16,6 +16,10 @@ defmodule RocketpayWeb.Router do
     plug Guardian.Plug.EnsureAuthenticated
   end
 
+  pipeline :owner do
+    plug Rocketpay.Auth.Owner
+  end
+
   scope "/api", RocketpayWeb do
     pipe_through :api
 
@@ -30,9 +34,14 @@ defmodule RocketpayWeb.Router do
   scope "/api", RocketpayWeb do
     pipe_through [:api, :authenticated]
 
+    put "/accounts/:id/deposit", AccountsController, :deposit
+  end
+
+  scope "/api", RocketpayWeb do
+    pipe_through [:api, :authenticated, :owner]
+
     get "/users/:id", UsersController, :show
 
-    put "/accounts/:id/deposit", AccountsController, :deposit
     put "/accounts/:id/withdraw", AccountsController, :withdraw
     put "/accounts/transaction", AccountsController, :transaction
   end

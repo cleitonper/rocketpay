@@ -4,7 +4,7 @@ defmodule RocketpayWeb.UsersControllerTest do
   alias Rocketpay.Fake
 
   describe "Controller: Users ⇾" do
-    setup [:user, :auth]
+    setup [:user]
 
     test "when the id is valid, should show an user", %{conn: conn, user: user} do
       expected_response = %{
@@ -27,17 +27,17 @@ defmodule RocketpayWeb.UsersControllerTest do
       assert expected_response === response
     end
 
-    test "when the id is invalid, should return Not Found in the response", %{conn: conn} do
+    test "when the resource doesn't belongs to the logged in user, should return Unauthorized in the response", %{conn: conn} do
       expected_response = %{
         "error" => %{
-          "message" => "Not Found"
+          "message" => "Unauthorized"
         }
       }
 
       response =
         conn
         |> get(Routes.users_path(conn, :show, "INVALID_USER_ID"))
-        |> json_response(:not_found)
+        |> json_response(:unauthorized)
 
       assert expected_response === response
     end
@@ -69,11 +69,7 @@ defmodule RocketpayWeb.UsersControllerTest do
     end
   end
 
-  defp user(_context) do
-    Rocketpay.Setup.create(:user)
-  end
-
-  defp auth(%{conn: conn}) do
-    Rocketpay.Setup.auth(conn)
+  defp user(%{conn: conn}) do
+    Rocketpay.Setup.create(:user, conn)
   end
 end
