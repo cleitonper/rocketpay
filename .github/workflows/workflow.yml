@@ -1,0 +1,86 @@
+name: Workflow
+
+on: push
+
+
+jobs:
+  test:
+    environment: test
+
+    runs-on: ubuntu-latest
+
+    env:
+      PORT: ${{ secrets.PORT }}
+      HOST: ${{ secrets.HOST }}
+      SIGNING_SALT: ${{ secrets.SIGNING_SALT }}
+      SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+      DB_DATABASE: ${{ secrets.DB_DATABASE }}
+      AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
+      AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+      MIX_ENV: test
+
+    services:
+      postgres:
+        image: postgres:13
+        ports: ['5432:5432']
+        env:
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_DATABASE }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup elixir
+        uses: erlef/setup-elixir@v1
+        with:
+          otp-version: '23.2.5'
+          elixir-version: '1.11.3'
+
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
+        id: deps-cache
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+
+      - name: Restore dialyzer cache
+        uses: actions/cache@v2
+        id: plts-cache
+        with:
+          path: priv/plts
+          key: ${{ runner.os }}-plts-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-plts-
+
+      - name: Install dependencies
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: mix deps.get
+
+      - name: Setup database
+        run: mix ecto.setup
+
+      - name: Run tests
+        run: mix test
+
+      - name: Run credo
+        run: mix credo
+
+      - name: Create dialyzer plts
+        if: steps.plts-cache.outputs.cache-hit != 'true'
+        env: {MIX_ENV: dev}
+        run: mix dialyzer --plt
+
+      - name: Run dialyzer
+        env: {MIX_ENV: dev}
+        run: mix dialyzer --no-check

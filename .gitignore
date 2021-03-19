@@ -31,3 +31,6 @@ rocketpay-*.tar
 
 # Certificados
 priv/cert
+
+# Dialyzer
+priv/plts/dialy*

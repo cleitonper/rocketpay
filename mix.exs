@@ -9,6 +9,7 @@ defmodule Rocketpay.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       compilers: compilers(),
+      dialyzer: dialyzer(),
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
@@ -47,7 +48,7 @@ defmodule Rocketpay.MixProject do
       {:phoenix_swagger, "~> 0.8"},
       {:excoveralls, "~> 0.10", only: :test},
       {:faker_elixir_octopus, "~> 1.0.0", only: :test},
-      {:dialyxir, "~> 1.1.0", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
   end
@@ -56,6 +57,13 @@ defmodule Rocketpay.MixProject do
     [:phoenix, :gettext]
     ++ Mix.compilers()
     ++ [:phoenix_swagger]
+  end
+
+  defp dialyzer do
+    [
+      plt_core_path: "priv/plts",
+      plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+    ]
   end
 
   defp aliases do
