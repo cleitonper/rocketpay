@@ -9,10 +9,9 @@ defmodule Rocketpay do
   um mapa de quais são as responsabilidades do sistema.
   """
 
-  alias Rocketpay.{Routes, Users}
+  alias Rocketpay.Users
   alias Rocketpay.Accounts.{Transaction, Deposit, Withdraw}
 
-  defdelegate list_routes(), to: Routes.List, as: :call
   defdelegate show_user(id), to: Users.Show, as: :call
   defdelegate get_user_by(field), to: Users.Get, as: :call
   defdelegate create_user(params), to: Users.Create, as: :call

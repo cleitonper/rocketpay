@@ -26,6 +26,17 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Swagger
+config :rocketpay, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      router: RocketpayWeb.Router,
+      endpoint: RocketpayWeb.Endpoint
+    ]
+  }
+
+config :phoenix_swagger, json_library: Jason
+
 # Authentication
 config :rocketpay, :basic_auth,
   username: System.fetch_env!("AUTH_USERNAME"),

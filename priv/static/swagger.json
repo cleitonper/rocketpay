@@ -1,0 +1,361 @@
+{
+  "basePath": "/api",
+  "consumes": [
+    "application/json"
+  ],
+  "definitions": {
+    "credentials": {
+      "description": "Dados necessários para identificar e autenticar um usuário na aplicação.\nÉ preciso fornecer o nome de usuário ou o e-mail da conta, e a senha de acesso.\n",
+      "properties": {
+        "email": {
+          "description": "E-mail da conta",
+          "type": "string"
+        },
+        "nickname": {
+          "description": "Nome de usuário",
+          "type": "string"
+        },
+        "password": {
+          "description": "Senha de acesso",
+          "type": "string"
+        }
+      },
+      "required": [
+        "password"
+      ],
+      "title": "Credenciais",
+      "type": "object"
+    },
+    "operation": {
+      "description": "Dados necessários para realizar uma operação de saque ou depósito em conta.\n",
+      "properties": {
+        "amount": {
+          "description": "Valor da operação",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount"
+      ],
+      "title": "Operação",
+      "type": "object"
+    },
+    "transaction": {
+      "description": "Dados necessários para realizar uma transferência.\n",
+      "properties": {
+        "amount": {
+          "description": "Valor da transferência",
+          "type": "string"
+        },
+        "from": {
+          "description": "ID da conta de origem",
+          "type": "string"
+        },
+        "to": {
+          "description": "ID da conta de destino",
+          "type": "string"
+        }
+      },
+      "required": [
+        "to",
+        "from",
+        "amount"
+      ],
+      "title": "Transerência",
+      "type": "object"
+    },
+    "user": {
+      "description": "Informações de um usuário da aplicação.\n",
+      "properties": {
+        "age": {
+          "description": "Idade",
+          "type": "integer"
+        },
+        "email": {
+          "description": "E-mail da conta",
+          "type": "string"
+        },
+        "name": {
+          "description": "Nome",
+          "type": "string"
+        },
+        "nickname": {
+          "description": "Nome de usuário",
+          "type": "string"
+        },
+        "password": {
+          "description": "Senha de acesso",
+          "type": "string"
+        }
+      },
+      "required": [
+        "password",
+        "nickname",
+        "email",
+        "age",
+        "name"
+      ],
+      "title": "Usuário",
+      "type": "object"
+    }
+  },
+  "host": "localhost:4000",
+  "info": {
+    "contact": {
+      "email": "cleiton.spereira@live.com",
+      "name": "Cleiton da Silva"
+    },
+    "description": "Sistema para processamento de transações financeiras",
+    "title": "Rocketpay",
+    "version": "0.0.0"
+  },
+  "paths": {
+    "/accounts/transaction": {
+      "put": {
+        "description": "**Realiza uma transferência**\nO `valor` da transferência é enviado da conta de `origem` para conta de `destino`.\n**Retorno da requisição**\n* Caso a requisição não esteja autenticada, retorna **401**\n* Caso o usuário logado não seja proprietário da conta de `origem`, retorna **401**\n* Caso o valor da transferência seja inválido ou maior que o saldo da conta de `origem`, retorna **400**\n* Caso contrário, retorna **200** e ambas as contas com saldo atualizado\n",
+        "operationId": "RocketpayWeb.AccountsController.transaction",
+        "parameters": [
+          {
+            "description": "Valor do depósito",
+            "in": "body",
+            "name": "transaction",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/transaction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Transferência",
+        "tags": [
+          "Accounts"
+        ]
+      }
+    },
+    "/accounts/{id}/deposit": {
+      "put": {
+        "description": "**Realiza um deposito**\nO deposito é feito na conta de `id` especificado na url da chamada.\n**Retorno da requisição**\n* Caso a requisição não esteja autenticada, retorna **401**\n* Caso o valor do depósito seja inválido, retorna **400**\n* Caso contrário, retorna **200** e a conta com saldo atualizado\n",
+        "operationId": "RocketpayWeb.AccountsController.deposit",
+        "parameters": [
+          {
+            "description": "ID da conta",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Valor do depósito",
+            "in": "body",
+            "name": "operation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/operation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Deposito",
+        "tags": [
+          "Accounts"
+        ]
+      }
+    },
+    "/accounts/{id}/withdraw": {
+      "put": {
+        "description": "**Realiza um saque**\nO saque é feito na conta de `id` especificado na url da chamada.\n**Retorno da requisição**\n* Caso a requisição não esteja autenticada, retorna **401**\n* Caso o usuário logado não seja proprietário da conta, retorna **401**\n* Caso o valor do saque seja inválido ou maior que o saldo da conta, retorna **400**\n* Caso contrário, retorna **200** e a conta com saldo atualizado\n",
+        "operationId": "RocketpayWeb.AccountsController.withdraw",
+        "parameters": [
+          {
+            "description": "ID da conta",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Valor do depósito",
+            "in": "body",
+            "name": "operation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/operation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Saque",
+        "tags": [
+          "Accounts"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "**Autentica um usuário na aplicação**\nO login pode ser feito usando `nickname` ou `email`, e a `senha` da conta.\n* Caso as _credenciais_ fornecidas sejam válidas, retorna **200** e um **token**\n* Caso contrário, retorna **401**\n\n**Uso do token**\nO token retornado deve ser enviado nas próximas requisições via `header`\nda seguinte forma: `Authorization: Bearer token`\n",
+        "operationId": "RocketpayWeb.AuthController.login",
+        "parameters": [
+          {
+            "description": "Credenciais de acesso",
+            "in": "body",
+            "name": "credentials",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/credentials"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "summary": "Login",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "description": "**Remove dados de autenticação da seção**\nNão é necessário usar essa rota para fazer logout,\npois não é possível invalidar um token JWT.\nEm uma próxima versão, ela poderá usada para por tokens\nem uma _lista de bloqueio_.\n**Então como fazer logout?**\nPara fazer logout, na aplicação cliente, basta apagar\no token recebido na requisição de login.\n",
+        "operationId": "RocketpayWeb.AuthController.logout",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "summary": "Logout",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "**Cria um novo usuário**\n* Caso algum campo informado seja inválido, retorna **400**\n* Caso contrário, retorna **200** e os dados do usuário criado\n",
+        "operationId": "RocketpayWeb.UsersController.create",
+        "parameters": [
+          {
+            "description": "Dados do usuário",
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "summary": "Criar usuário",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "description": "**Exibe detalhes de um usuário**\n* Caso a requisição não esteja autenticada, retorna **401**\n* Caso o usuário logado não seja proprietário da conta, retorna **401**\n* Caso contrário, retorna **200** e os dados do usuário solicitado\n",
+        "operationId": "RocketpayWeb.UsersController.show",
+        "parameters": [
+          {
+            "description": "ID do usuário",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Exibir usuário",
+        "tags": [
+          "Users"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "JWT": {
+      "description": "Um token JWT válido deve ser fornecido",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

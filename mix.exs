@@ -7,8 +7,8 @@ defmodule Rocketpay.MixProject do
       version: "0.0.0",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      compilers: compilers(),
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
@@ -43,11 +43,19 @@ defmodule Rocketpay.MixProject do
       {:decimal, "~> 2.0"},
       {:plug_cowboy, "~> 2.0"},
       {:bcrypt_elixir, "~> 2.0"},
+      {:ex_json_schema, "~> 0.7"},
+      {:phoenix_swagger, "~> 0.8"},
       {:excoveralls, "~> 0.10", only: :test},
       {:faker_elixir_octopus, "~> 1.0.0", only: :test},
       {:dialyxir, "~> 1.1.0", only: :dev, runtime: false},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
+  end
+
+  defp compilers() do
+    [:phoenix, :gettext]
+    ++ Mix.compilers()
+    ++ [:phoenix_swagger]
   end
 
   defp aliases do

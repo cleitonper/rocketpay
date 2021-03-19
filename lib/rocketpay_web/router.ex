@@ -23,8 +23,6 @@ defmodule RocketpayWeb.Router do
   scope "/api", RocketpayWeb do
     pipe_through :api
 
-    get "/", HomeController, :index
-
     post "/auth/login", AuthController, :login
     post "/auth/logout", AuthController, :logout
 
@@ -46,6 +44,12 @@ defmodule RocketpayWeb.Router do
     put "/accounts/transaction", AccountsController, :transaction
   end
 
+  scope "/api" do
+    forward "/", PhoenixSwagger.Plug.SwaggerUI,
+      otp_app: :rocketpay,
+      swagger_file: "swagger.json"
+  end
+
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 
@@ -53,5 +57,31 @@ defmodule RocketpayWeb.Router do
       pipe_through [:fetch_session, :protect_from_forgery, :auth]
       live_dashboard "/dashboard", metrics: RocketpayWeb.Telemetry
     end
+  end
+
+  def swagger_info do
+    %{
+      info: %{
+        version: "0.0.0",
+        title: "Rocketpay",
+        description: "Sistema para processamento de transações financeiras",
+        contact: %{
+          name: "Cleiton da Silva",
+          email: "cleiton.spereira@live.com"
+        }
+      },
+      securityDefinitions: %{
+        JWT: %{
+          in: "header",
+          type: "apiKey",
+          name: "Authorization",
+          description: "Um token JWT válido deve ser fornecido"
+        }
+      },
+      consumes: ["application/json"],
+      produces: ["application/json"],
+      schemes: ["http", "https"],
+      basePath: "/api"
+    }
   end
 end

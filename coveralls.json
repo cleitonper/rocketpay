@@ -10,6 +10,7 @@
     "lib/rocketpay/application.ex",
     "lib/rocketpay/repo.ex",
     "lib/rocketpay_web.ex",
+    "lib/rocketpay_web/swagger",
     "lib/rocketpay_web/helpers",
     "lib/rocketpay_web/channels",
     "lib/rocketpay_web/telemetry.ex",
@@ -17,5 +18,8 @@
     "lib/rocketpay_web/endpoint.ex",
     "lib/rocketpay_web/router.ex",
     "test/support"
+  ],
+  "custom_stop_words": [
+    "swagger"
   ]
 }
