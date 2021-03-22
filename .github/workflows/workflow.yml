@@ -70,9 +70,6 @@ jobs:
       - name: Setup database
         run: mix ecto.setup
 
-      - name: Run tests
-        run: mix test
-
       - name: Run credo
         run: mix credo
 
@@ -84,3 +81,9 @@ jobs:
       - name: Run dialyzer
         env: {MIX_ENV: dev}
         run: mix dialyzer --no-check
+
+      - name: Run tests
+        run: mix coveralls.json
+
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v1
