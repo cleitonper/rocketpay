@@ -4,6 +4,8 @@
 
 > Sistema para processamento de transações financeiras
 
+[![Build status](https://img.shields.io/github/workflow/status/cleitonper/rocketpay/Workflow?logo=github-actions&logoColor=white)](https://github.com/cleitonper/rocketpay/actions/workflows/workflow.yml) [![Test coverage](https://img.shields.io/codecov/c/gh/cleitonper/rocketpay?logo=codecov&logoColor=white)](https://codecov.io/gh/cleitonper/rocketpay) [![This project uses Credo](https://img.shields.io/badge/analysis-credo-success?logo=coderwall&logoColor=white)](https://hexdocs.pm/credo/overview.html) [![This project uses Dialyzer](https://img.shields.io/badge/analysis-dialyzer-success?logo=coderwall&logoColor=white)](https://hexdocs.pm/dialyxir/readme.html)
+
 
 ## Pré requisitos
 É preciso ter um ambiente de desenvolvimento baseado em _Unix_ (Linux, Mac, WSL, etc) para poder executar esse projeto. Além disso, as ferramentas listadas a seguir precisam ser instaladas:
