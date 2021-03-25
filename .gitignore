@@ -34,3 +34,9 @@ priv/cert
 
 # Dialyzer
 priv/plts/dialy*
+
+# Variáveis de ambiente
+.env
+.env.dev
+.env.test
+.env.prod

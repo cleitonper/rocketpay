@@ -16,7 +16,7 @@
 
 
 ## Variáveis de ambiente
-Na raiz do projeto, renomeie o arquivo `.envrc.example` para `.envrc` e preencha o valor das variáveis de ambiente contidas no arquivo.
+Na raiz do projeto, renomeie o arquivo `.env.example` para `.env` e preencha o valor das variáveis de ambiente contidas no arquivo.
 
 
 ## Preparando o ambiente de desenvolvimento
