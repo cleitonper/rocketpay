@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  api:
+    image: rocketpay:${APP_VERSION:-latest}
+    container_name: api
+    restart: on-failure
+    env_file: .env
+    build:
+      context: .
+      args:
+        ELIXIR_VERSION: ${ELIXIR_VERSION:-1.11-alpine}
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:${PORT:-4000}/api"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - .:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-13-alpine}
+    container_name: postgres
+    restart: on-failure
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:?required}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?required}
+      POSTGRES_DB: ${DB_DATABASE:?required}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ["CMD", "pg_isready -U $DB_USERNAME"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    command: -p ${DB_PORT:?required}
+volumes:
+  pgdata:
+networks:
+  default:
+    name: rocketpay

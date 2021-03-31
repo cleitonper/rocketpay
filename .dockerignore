@@ -1,0 +1,45 @@
+# Extensão ElixirLS (vscode)
+.elixir_ls/
+
+# Arquivos compilados pelo Mix.
+/_build/
+*.beam
+
+# Cobertura de testes automatizados.
+/cover/
+
+# Dependencias do projeto.
+/deps/
+
+# Documentações.
+/doc/
+/docs/
+README.md
+
+# Dependencias baixadas para serem editadas localmente.
+/.fetch
+
+# Relatórios de erro.
+erl_crash.dump
+
+# Arquivos de artefato (gerados via "mix archive.build").
+*.ez
+
+# Pacotes tarball (gerados via "mix hex.build").
+rocketpay-*.tar
+
+# Certificados
+priv/cert
+
+# Dialyzer
+priv/plts/dialy*
+
+# Variáveis de ambiente
+.env*
+
+# Git
+.git*
+
+# Docker
+docker-compose.yml
+Dockerfile

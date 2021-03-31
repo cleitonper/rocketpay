@@ -1,0 +1,19 @@
+{
+	"name": "Rocketpay",
+	"service": "api",
+	"workspaceFolder": "/workspace",
+
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		"docker-compose.yml"
+	],
+
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/ash"
+	},
+
+	"extensions": [
+		"JakeBecker.elixir-ls",
+		"iampeterbanjo.elixirlinter"
+	]
+}
