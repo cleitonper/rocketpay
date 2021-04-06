@@ -21,6 +21,7 @@ RUN mix local.hex --force && \
 
 COPY . .
 
-RUN mv ./entrypoint.sh /usr/local/bin
+RUN mv ./docker/scripts/*.sh /usr/local/bin && \
+    rm -rf ./docker
 
 ENTRYPOINT "entrypoint.sh"
