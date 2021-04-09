@@ -5,19 +5,16 @@ current="/app/mix.lock"
 
 function update() {
   cp "${built}" "${current}"
-  pwd
-  ls -la
-  ls -la deps
 }
 
 if ! [[ -f $current ]]; then
-  echo "[info] Creating lockfike..."
+  echo "[info] Dependencies: creating lockfike..."
   update
   exit 0
 fi
 
 if [[ "$(cmp -s $built $current)" != "0" ]]; then
-  echo "[info] Updating lockfile..."
+  echo "[info] Dependencies: updating lockfile..."
   update
   exit 0
 fi

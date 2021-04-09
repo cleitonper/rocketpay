@@ -17,6 +17,8 @@ services:
       retries: 5
     volumes:
       - .:/app
+      - /app/deps
+      - /app/_build
     ports:
       - "4000:4000"
     depends_on:
