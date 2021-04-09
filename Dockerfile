@@ -17,7 +17,8 @@ COPY config mix.exs mix.lock /app/
 RUN mix local.hex --force && \
     mix local.rebar --force && \
     mix deps.get && \
-    mix deps.compile
+    mix deps.compile && \
+    cp mix.lock /tmp/
 
 COPY . .
 

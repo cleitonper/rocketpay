@@ -1,4 +1,6 @@
 #!/bin/sh
+lockfile.sh
+
 PLTS=/app/priv/plts
 if ls ${PLTS}/*.plt >/dev/null 2>&1; then
   echo '[info] Dialyzer: restoring plts from cache...'
