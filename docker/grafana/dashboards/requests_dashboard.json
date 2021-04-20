@@ -1,0 +1,1607 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "iteration": 1618934831742,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 1,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"informational\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"success\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"redirection\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"client-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"server-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Deposit ~> Request Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "µs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/deposit$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Deposit ~> Requests",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "id": 3,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"informational\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"success\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"redirection\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"client-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"server-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Withdraw ~> Request Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "µs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/withdraw$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Withdraw ~> Requests",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 5,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"informational\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"success\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"redirection\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"client-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"server-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Transaction ~> Request Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "µs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"PUT\", path=~\".*/transaction$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Transaction ~> Requests",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 27
+      },
+      "hiddenSeries": false,
+      "id": 7,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"informational\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"success\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"redirection\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"client-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"server-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Login ~> Request Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "µs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 27
+      },
+      "hiddenSeries": false,
+      "id": 8,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/login$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Login ~> Requests",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 36
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"informational\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"success\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"redirection\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"client-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(http_request_duration_microseconds_sum{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"server-error\"}[$interval])) / sum(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Register ~> Request Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "µs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "1xx": "#29b6f6",
+        "2xx": "#4caf50",
+        "3xx": "#2962ff",
+        "4xx": "#ffeb3b",
+        "5xx": "#f44336"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 36
+      },
+      "hiddenSeries": false,
+      "id": 10,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"informational\"}[$interval]))",
+          "interval": "",
+          "legendFormat": "1xx",
+          "queryType": "randomWalk",
+          "refId": "1xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"success\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "2xx",
+          "queryType": "randomWalk",
+          "refId": "2xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"redirection\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "3xx",
+          "queryType": "randomWalk",
+          "refId": "3xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"client-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "4xx",
+          "queryType": "randomWalk",
+          "refId": "4xx"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum by (status_class)(rate(http_request_duration_microseconds_count{instance=\"$node\", method=\"POST\", path=~\".*/users$\", status_class=\"server-error\"}[$interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "5xx",
+          "queryType": "randomWalk",
+          "refId": "5xx"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Register ~> Requests",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:64",
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:65",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "api:4000",
+          "value": "api:4000"
+        },
+        "datasource": "prometheus",
+        "definition": "label_values(erlang_vm_process_count, instance)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Node",
+        "multi": false,
+        "name": "node",
+        "options": [],
+        "query": {
+          "query": "label_values(erlang_vm_process_count, instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "1m",
+          "value": "1m"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "label": "Interval",
+        "name": "interval",
+        "options": [
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "10s,30s,1m,5m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Requests",
+  "uid": "-G3BV1XGz",
+  "version": 15
+}

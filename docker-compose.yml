@@ -23,6 +23,42 @@ services:
       - "4000:4000"
     depends_on:
       - postgres
+  grafana:
+    image: grafana/grafana:7.5.2
+    container_name: grafana
+    env_file: ./docker/grafana/.env
+    depends_on:
+      - prometheus
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./docker/grafana/:/etc/grafana/provisioning/
+  prometheus:
+    image: prom/prometheus:v2.26.0
+    container_name: prometheus
+    ports:
+      - "9000:9000"
+    volumes:
+      - prometheus_data:/prometheus
+      - ./docker/prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/config.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter:v0.8.0
+    container_name: postgres_prometheus
+    env_file: .env
+    environment:
+      DATA_SOURCE_USER: ${DB_USERNAME}
+      DATA_SOURCE_PASS: ${DB_PASSWORD}
+      DATA_SOURCE_URI: ${DB_HOSTNAME}:${DB_PORT}/${DB_DATABASE}?sslmode=disable
+    ports:
+      - '9187:9187'
+    depends_on:
+      - postgres
   postgres:
     image: postgres:${POSTGRES_VERSION:-13-alpine}
     container_name: postgres
@@ -42,6 +78,8 @@ services:
       - pgdata:/var/lib/postgresql/data
     command: -p ${DB_PORT:?required}
 volumes:
+  grafana_data:
+  prometheus_data:
   pgdata:
 networks:
   default:

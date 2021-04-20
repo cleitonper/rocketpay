@@ -37,5 +37,7 @@ defmodule RocketpayWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Rocketpay.PrometheusExporter
+  plug Rocketpay.PipelineInstrumenter
   plug RocketpayWeb.Router
 end

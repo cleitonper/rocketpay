@@ -49,5 +49,10 @@ config :rocketpay, Rocketpay.Guardian,
 # Phoenix
 config :phoenix, :json_library, Jason
 
+config :prometheus, Rocketpay.PipelineInstrumenter,
+  registry: :default,
+  duration_unit: :microseconds,
+  labels: [:status_class, :status, :method, :path, :host, :scheme]
+
 # Import environment specific config
 import_config "#{Mix.env()}.exs"

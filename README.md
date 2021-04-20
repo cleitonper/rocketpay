@@ -67,3 +67,9 @@ $ mix dialyzer
 **Atenção!** Para executar os comandos acima, é necessário que o *container* do projeto esteja em execução. Para verificar se o *container* está em execução, use o comando `docker-compose ps`. Um serviço com o nome `api` deve aparecer com o status `Up`.
 
 **Dica!** Para não ter que criar um *alias* toda vez que abrir o projeto, você pode cria-lo no arquivo de configuração do seu shell (`~/.bashrc`, `~/.zshrc`, *etc*).
+
+
+## Documentação relacionada
+
+  - [Integração do ambiente de desenvolvimento com Visual Studio Code](docs/vscode.md)
+  - [Monitorando a aplicação com grafana](docs/monitoring.md)
