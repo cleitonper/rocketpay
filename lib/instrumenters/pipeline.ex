@@ -4,7 +4,7 @@ defmodule Rocketpay.PipelineInstrumenter do
   def label_value(:path, conn) do
     case Phoenix.Router.route_info(RocketpayWeb.Router, conn.method, conn.request_path, "") do
       %{route: path} -> path
-      _ -> "unkown"
+      _info -> "unkown"
     end
   end
 
