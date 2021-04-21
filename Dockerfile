@@ -9,10 +9,34 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
   && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
   && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-RUN mkdir /app
-WORKDIR /app
 
-COPY config mix.exs mix.lock /app/
+ARG USER=elixir
+ARG GID=1000
+ARG UID=1000
+
+ENV USER=${USER}
+ENV HOME=/home/${USER}
+ENV PATH=${HOME}/.local/bin:${PATH}
+ENV APP_DIR=${HOME}/app
+
+RUN \
+  addgroup \
+    -g 1000 \
+    "${USER}" && \
+  adduser \
+    -u 1000 \
+    -G "${USER}" \
+    -h "${HOME}" \
+    -s /bin/sh \
+    -D "${USER}" && \
+  su "${USER}" sh -c "mkdir -p ${APP_DIR}" && \
+  su "${USER}" sh -c "mkdir -p ${HOME}/.local/bin"
+
+USER "${USER}"
+WORKDIR "${APP_DIR}"
+
+COPY --chown="${USER}":"${USER}" mix.exs mix.lock "${APP_DIR}"/
+COPY --chown="${USER}":"${USER}" config "${APP_DIR}"/config
 
 RUN mix local.hex --force && \
   mix local.rebar --force && \
@@ -20,9 +44,9 @@ RUN mix local.hex --force && \
   mix deps.compile && \
   cp mix.lock /tmp/
 
-COPY . .
+COPY --chown="${USER}":"${USER}" . .
 
-RUN mv ./docker/scripts/*.sh /usr/local/bin && \
+RUN mv ./docker/scripts/*.sh "${HOME}/.local/bin" && \
   rm -rf ./docker
 
 ENTRYPOINT "entrypoint.sh"

@@ -1,7 +1,7 @@
 #!/bin/sh
 lockfile.sh
 
-PLTS=/app/priv/plts
+PLTS=${HOME}/app/priv/plts
 if ls ${PLTS}/*.plt >/dev/null 2>&1; then
   echo '[info] Dialyzer: restoring plts from cache...'
 else
@@ -9,7 +9,7 @@ else
   mix dialyzer --plt
 fi
 
-CERTS=/app/priv/cert
+CERTS=${HOME}/app/priv/cert
 if ls ${CERTS}/*.pem >/dev/null 2>&1; then
   echo '[info] SSL: Restoring certs from cache...'
 else

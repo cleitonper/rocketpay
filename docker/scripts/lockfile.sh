@@ -1,7 +1,7 @@
 
 #!/bin/sh
 built="/tmp/mix.lock"
-current="/app/mix.lock"
+current="${HOME}/app/mix.lock"
 
 function update() {
   cp "${built}" "${current}"

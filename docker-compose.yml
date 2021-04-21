@@ -10,15 +10,18 @@ services:
       context: .
       args:
         ELIXIR_VERSION: ${ELIXIR_VERSION:-1.11-alpine}
+        USER: ${USER:-elixir}
+        GID: ${GID:-1000}
+        UID: ${UID:-1000}
     healthcheck:
       test: ["CMD", "curl", "http://localhost:${PORT:-4000}/api"]
       interval: 30s
       timeout: 5s
       retries: 5
     volumes:
-      - .:/app
-      - /app/deps
-      - /app/_build
+      - .:${HOME}/app
+      - ${HOME}/app/deps
+      - ${HOME}/app/_build
     ports:
       - "4000:4000"
     depends_on:
