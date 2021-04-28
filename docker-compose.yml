@@ -5,7 +5,7 @@ services:
     image: rocketpay:${APP_VERSION:-latest}
     container_name: api
     restart: on-failure
-    env_file: .env
+    env_file: .env.dev
     build:
       context: .
       args:
@@ -29,7 +29,7 @@ services:
   grafana:
     image: grafana/grafana:7.5.2
     container_name: grafana
-    env_file: ./docker/grafana/.env
+    env_file: ./docker/grafana/.env.dev
     depends_on:
       - prometheus
     ports:
@@ -53,11 +53,7 @@ services:
   postgres_exporter:
     image: wrouesnel/postgres_exporter:v0.8.0
     container_name: postgres_prometheus
-    env_file: .env
-    environment:
-      DATA_SOURCE_USER: ${DB_USERNAME}
-      DATA_SOURCE_PASS: ${DB_PASSWORD}
-      DATA_SOURCE_URI: ${DB_HOSTNAME}:${DB_PORT}/${DB_DATABASE}?sslmode=disable
+    env_file: ./docker/postgres_exporter/.env.dev
     ports:
       - '9187:9187'
     depends_on:
@@ -66,20 +62,17 @@ services:
     image: postgres:${POSTGRES_VERSION:-13-alpine}
     container_name: postgres
     restart: on-failure
-    env_file: .env
+    env_file: ./docker/postgres/.env.dev
     environment:
-      POSTGRES_USER: ${DB_USERNAME:?required}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:?required}
-      POSTGRES_DB: ${DB_DATABASE:?required}
       PGDATA: /var/lib/postgresql/data/pgdata
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $DB_USERNAME"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 30s
       timeout: 5s
       retries: 5
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    command: -p ${DB_PORT:?required}
+      - pgdata:/var/lib/postgresql/data/pgdata
+    command: -p ${POSTGRES_PORT:-5432}
 volumes:
   grafana_data:
   prometheus_data:
