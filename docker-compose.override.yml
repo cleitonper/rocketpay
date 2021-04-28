@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  api:
+    env_file: .env.dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:${HOME}/app
+      - ${HOME}/app/deps
+      - ${HOME}/app/_build
+    ports:
+      - "4000:4000"
+  grafana:
+    env_file: ./docker/grafana/.env.dev
+  postgres_exporter:
+    env_file: ./docker/postgres_exporter/.env.dev
+  postgres:
+    env_file: ./docker/postgres/.env.dev
