@@ -7,9 +7,6 @@ config :rocketpay, Rocketpay.Repo,
 
 # Web
 config :rocketpay, RocketpayWeb.Endpoint,
-  https: [
-    cipher_suite: :strong,
-  ],
   debug_errors: true,
   code_reloader: true,
   check_origin: false
