@@ -1,17 +1,14 @@
 defmodule RocketpayWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :rocketpay
 
-  @session_options [
-    store: :cookie,
-    key: "__rocketpay",
-    signing_salt: System.fetch_env!("SIGNING_SALT")
-  ]
-
   socket "/socket", RocketpayWeb.UserSocket,
     websocket: true,
     longpoll: false
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [
+      connect_info: [session: {RocketpayWeb.Session, :options, []}]
+    ]
 
   plug Plug.Static,
     at: "/",
@@ -36,8 +33,13 @@ defmodule RocketpayWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug Plug.Session, @session_options
+  plug :session
   plug Rocketpay.PrometheusExporter
   plug Rocketpay.PipelineInstrumenter
   plug RocketpayWeb.Router
+
+  defp session(conn, _opts) do
+    opts = Plug.Session.init(RocketpayWeb.Session.options())
+    Plug.Session.call(conn, opts)
+  end
 end
