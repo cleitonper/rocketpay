@@ -8,7 +8,7 @@ defmodule RocketpayWeb.Router do
   end
 
   pipeline :auth do
-    plug :basic_auth, Application.compile_env(:rocketpay, :basic_auth)
+    plug :basic_auth, Application.get_env(:rocketpay, :basic_auth)
   end
 
   pipeline :authenticated do
