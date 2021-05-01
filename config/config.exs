@@ -16,9 +16,6 @@ config :rocketpay, RocketpayWeb.Endpoint,
     view: RocketpayWeb.ErrorView,
     accepts: ~w(json),
     layout: false
-  ],
-  live_view: [
-    signing_salt: System.get_env("SIGNING_SALT")
   ]
 
 # Logger
@@ -37,14 +34,8 @@ config :rocketpay, :phoenix_swagger,
 
 config :phoenix_swagger, json_library: Jason
 
-# Authentication
-config :rocketpay, :basic_auth,
-  username: System.get_env("AUTH_USERNAME"),
-  password: System.get_env("AUTH_PASSWORD")
-
 config :rocketpay, Rocketpay.Guardian,
-  issuer: "rocketpay",
-  secret_key: System.get_env("AUTH_SECRET")
+  issuer: "rocketpay"
 
 # Phoenix
 config :phoenix, :json_library, Jason
