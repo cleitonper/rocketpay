@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Database
 config :rocketpay, Rocketpay.Repo,

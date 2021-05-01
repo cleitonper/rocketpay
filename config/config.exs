@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Ecto
 config :rocketpay,
@@ -55,4 +55,4 @@ config :prometheus, Rocketpay.PipelineInstrumenter,
   labels: [:status_class, :status, :method, :path, :host, :scheme]
 
 # Import environment specific config
-import_config "#{Mix.env()}.exs"
+import_config "#{config_env()}.exs"
