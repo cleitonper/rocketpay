@@ -46,7 +46,7 @@ RUN mix local.hex --force && \
 
 COPY --chown="${USER}":"${USER}" . .
 
-RUN mv ./docker/scripts/*.sh "${HOME}/.local/bin" && \
+RUN mv ./docker/scripts/development/*.sh "${HOME}/.local/bin" && \
   rm -rf ./docker
 
 ENTRYPOINT "entrypoint.sh"
