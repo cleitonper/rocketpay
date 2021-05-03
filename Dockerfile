@@ -21,10 +21,10 @@ ENV APP_DIR=${HOME}/app
 
 RUN \
   addgroup \
-    -g 1000 \
+    -g ${GID} \
     "${USER}" && \
   adduser \
-    -u 1000 \
+    -u ${UID} \
     -G "${USER}" \
     -h "${HOME}" \
     -s /bin/sh \
