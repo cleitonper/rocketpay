@@ -7,6 +7,19 @@
 [![Build status](https://img.shields.io/github/workflow/status/cleitonper/rocketpay/Workflow?logo=github-actions&logoColor=white)](https://github.com/cleitonper/rocketpay/actions/workflows/workflow.yml) [![Test coverage](https://img.shields.io/codecov/c/gh/cleitonper/rocketpay?logo=codecov&logoColor=white)](https://codecov.io/gh/cleitonper/rocketpay) [![This project uses Credo](https://img.shields.io/badge/analysis-credo-success?logo=coderwall&logoColor=white)](https://hexdocs.pm/credo/overview.html) [![This project uses Dialyzer](https://img.shields.io/badge/analysis-dialyzer-success?logo=coderwall&logoColor=white)](https://hexdocs.pm/dialyxir/readme.html)
 
 
+___
+#### Seções da página
+
+  * [Pŕe requisitos](#pré-requisitos)
+  * [Variáveis de ambiente](#variáveis-de-ambiente)
+  * [Ambiente de desenvolvimento](#ambiente-de-desenvolvimento)
+  * [Testes automatizados](#testes-automatizados)
+  * [Build de produção](#build-de-produção)
+  * [Documentação relacionada](#documentação-relacionada)
+
+___
+
+
 ## Pré requisitos
 O ambiente de desenvolvimento deste projeto usa *containers* para fornecer a infraestrutura necessária para a execução da aplicação. Por conta disso, é necessário que as ferramentas a seguir sejam instaladas:
 
