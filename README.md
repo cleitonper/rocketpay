@@ -12,6 +12,7 @@ O ambiente de desenvolvimento deste projeto usa *containers* para fornecer a inf
 
   * [`docker`](https://docs.docker.com/get-docker/)
   * [`docker-compose`](https://docs.docker.com/compose/install/)
+  * [`buildx`](https://docs.docker.com/buildx/working-with-buildx/#install) (`docker buildx install`)
 
 **Dica!** Caso use o editor **Visual Studio Code**, veja [neste guia](docs/vscode.md) como executar o editor dentro do *container* da aplicação. 
 
