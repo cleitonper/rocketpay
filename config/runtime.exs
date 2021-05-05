@@ -32,7 +32,7 @@ config :rocketpay, Rocketpay.Guardian,
 
 
 # Check database config
-db_dev_config = ["DB_PORT", "DB_HOSTNAME", "DB_USERNAME", "DB_PASSWORD"]
+db_dev_config = ["DB_HOSTNAME", "DB_USERNAME", "DB_PASSWORD"]
 db_prod_config = "DB_URL"
 
 if config_env() !== :prod do
