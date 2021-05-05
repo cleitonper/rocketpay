@@ -64,6 +64,18 @@ $ mix dialyzer
 **Dica!** Para não ter que criar um *alias* toda vez que abrir o projeto, você pode cria-lo no arquivo de configuração do seu shell (`~/.bashrc`, `~/.zshrc`, *etc*).
 
 
+## Build de produção
+Execute os comandos abaixo para gerar um novo [`release`](https://hexdocs.pm/phoenix/releases.html) e executar o ambiente de produção localmente:
+
+```bash
+# Crie a imagem que executará conterá os binários de produção
+$ docker-compose -f docker-compose.yml build
+
+# Execute a aplicação
+$ docker-compose -f docker-compose.yml up
+```
+
+
 ## Documentação relacionada
 
   - [Integração do ambiente de desenvolvimento com Visual Studio Code](docs/vscode.md)
