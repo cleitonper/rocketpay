@@ -21,24 +21,18 @@ O ambiente de desenvolvimento deste projeto usa *containers* para fornecer a inf
 Na raiz do projeto, renomeie o arquivo `.env.example` para `.env` e preencha o valor das variáveis de ambiente contidas no arquivo.
 
 
-## Preparando o ambiente de desenvolvimento
-Crie a *imagem* que será usada para executar o servidor de desenvolvimento usando o comando abaixo:
+## Ambiente de desenvolvimento
+Sigas as instruções abaixo para executar o servidor de desenvolvimento:
 
 ```bash
 # Crie a imagem que executará o projeto
 $ docker-compose build
-```
 
-
-## Executando o servidor de desenvolvimento
-Depois de ter criado a *imagem* seguindo o passo anterior, crie e execute o *container* que inicializará nosso servidor de desenvolvimento com o comando a seguir:
-
-```bash
 # Execute o servidor de desenvolvimento
 $ docker-compose up
 ```
 
-**Atenção!** Caso tenha seguido o [guia de configuração do editor](docs/vscode.md) *Visual Studio Code*, não é necessário executar o comando acima. Ele é executado automaticamente ao abrir o projeto no editor.
+**Atenção!** Caso tenha seguido o [guia de configuração do editor](docs/vscode.md) *Visual Studio Code*, não é necessário executar o comando `docker-compose up`. Ele é executado automaticamente ao abrir o projeto no editor.
 
 
 ## Testes automatizados
