@@ -40,3 +40,4 @@ priv/plts/dialy*
 .env.dev
 .env.test
 .env.prod
+.env.production

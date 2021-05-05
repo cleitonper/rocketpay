@@ -1,26 +1,33 @@
-version: '3'
+version: '3.7'
 
 services:
   api:
     image: rocketpay:${APP_VERSION:-latest}
     container_name: api
     restart: on-failure
+    env_file: .env.production
     build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
       args:
         ELIXIR_VERSION: ${ELIXIR_VERSION:-1.11-alpine}
         USER: ${USER:-elixir}
         GID: ${GID:-1000}
         UID: ${UID:-1000}
     healthcheck:
-      test: ["CMD", "curl", "http://localhost:${PORT:-4000}/api"]
+      test: ["CMD", "curl", "http://localhost:${PORT:-80}/api"]
       interval: 30s
       timeout: 5s
       retries: 5
+    ports:
+      - "${PORT:-80}:${PORT:-80}"
     depends_on:
       - postgres
   grafana:
     image: grafana/grafana:7.5.2
     container_name: grafana
+    env_file: ./docker/grafana/.env.production
     depends_on:
       - prometheus
     ports:
@@ -44,6 +51,7 @@ services:
   postgres_exporter:
     image: wrouesnel/postgres_exporter:v0.8.0
     container_name: postgres_prometheus
+    env_file: ./docker/postgres_exporter/.env.production
     ports:
       - '9187:9187'
     depends_on:
@@ -52,6 +60,7 @@ services:
     image: postgres:${POSTGRES_VERSION:-13-alpine}
     container_name: postgres
     restart: on-failure
+    env_file: ./docker/postgres/.env.production
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
     healthcheck:
