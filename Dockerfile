@@ -10,7 +10,7 @@
 
 
 # Versão Elixir usada em todas as etapas
-ARG ELIXIR_VERSION=11.4-alpine
+ARG ELIXIR_VERSION=1.11-alpine
 
 
 
