@@ -31,7 +31,7 @@ O ambiente de desenvolvimento deste projeto usa *containers* para fornecer a inf
 
 
 ## Variáveis de ambiente
-Na raiz do projeto, renomeie o arquivo `.env.example` para `.env` e preencha o valor das variáveis de ambiente contidas no arquivo.
+Algumas configurações do projeto são definidas com do uso de variáveis de ambiente, através de arquivos `.env`. Veja como definilas [neste guia](docs/environment.md).
 
 
 ## Ambiente de desenvolvimento
@@ -91,5 +91,6 @@ $ docker-compose -f docker-compose.yml up
 
 ## Documentação relacionada
 
+  - [Variáveis de Ambiente](docs/environment.md)
   - [Integração do ambiente de desenvolvimento com Visual Studio Code](docs/vscode.md)
   - [Monitorando a aplicação com grafana](docs/monitoring.md)
