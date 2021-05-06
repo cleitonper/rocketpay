@@ -31,7 +31,7 @@ ___
 ## Por que usar?
 Algumas informações *sensíveis*, como senha do banco de dados e chaves de criptografia, não devem ser expostas no código fonte, e por isso são obtidas somente quando a aplicação é executada. Uma forma de obter essas informações em tempo de execução é com o uso de variáveis de ambiente.
 
-Um outro motivo para seu uso se dá por conta das informações mudarem de acordo com o *ambiente* em que o projeto é executado. A porta do servidor web por ter um determinado valor durante o desenvolvimento e mudar quando a aplicação estiver sendo executada em produção. Assim como no caso anterior, esse objetivo também pode ser alcançado usando variáveis de ambiente.
+Um outro motivo para seu uso se dá por conta das informações mudarem de acordo com o *ambiente* em que o projeto é executado. A porta do servidor web pode ter um determinado valor durante o desenvolvimento e mudar quando a aplicação estiver sendo executada em produção. Assim como no caso anterior, esse objetivo também pode ser alcançado usando variáveis de ambiente.
 
 
 ## Casos de uso de variáveis de ambiente
