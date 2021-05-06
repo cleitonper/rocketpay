@@ -8,6 +8,7 @@
   },
   "skip_files": [
     "lib/rocketpay/application.ex",
+    "lib/rocketpay/release.ex",
     "lib/rocketpay/repo.ex",
     "lib/rocketpay_web.ex",
     "lib/rocketpay_web/swagger",
