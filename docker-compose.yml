@@ -2,31 +2,14 @@ version: '3.8'
 
 services:
   api:
-    image: rocketpay:${APP_VERSION:-latest}
-    container_name: api
-    restart: on-failure
+    image: ${AWS_ECR_URL:?required}/rocketpay:${APP_VERSION:-latest}
     env_file: .env.production
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production
-      args:
-        ELIXIR_VERSION: ${ELIXIR_VERSION:-1.11-alpine}
-        USER: ${USER:-elixir}
-        GID: ${GID:-1000}
-        UID: ${UID:-1000}
-    healthcheck:
-      test: ["CMD", "curl", "http://localhost:${PORT:-80}/api"]
-      interval: 30s
-      timeout: 5s
-      retries: 5
     ports:
       - "${PORT:-80}:${PORT:-80}"
     depends_on:
       - postgres
   grafana:
-    image: grafana/grafana:7.5.2
-    container_name: grafana
+    image: ${AWS_ECR_URL:?required}/grafana:7.5.2
     env_file: ./docker/grafana/.env.production
     depends_on:
       - prometheus
@@ -34,15 +17,12 @@ services:
       - '3000:3000'
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./docker/grafana/:/etc/grafana/provisioning/
   prometheus:
-    image: prom/prometheus:v2.26.0
-    container_name: prometheus
+    image: ${AWS_ECR_URL:?required}/prometheus:v2.26.0
     ports:
       - "9000:9000"
     volumes:
       - prometheus_data:/prometheus
-      - ./docker/prometheus/:/etc/prometheus/
     command:
       - '--config.file=/etc/prometheus/config.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -50,7 +30,6 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
   postgres_exporter:
     image: wrouesnel/postgres_exporter:v0.8.0
-    container_name: postgres_prometheus
     env_file: ./docker/postgres_exporter/.env.production
     ports:
       - '9187:9187'
@@ -58,16 +37,9 @@ services:
       - postgres
   postgres:
     image: postgres:${POSTGRES_VERSION:-13-alpine}
-    container_name: postgres
-    restart: on-failure
     env_file: ./docker/postgres/.env.production
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
-      interval: 30s
-      timeout: 5s
-      retries: 5
     volumes:
       - pgdata:/var/lib/postgresql/data/pgdata
     command: -p ${POSTGRES_PORT:-5432}
