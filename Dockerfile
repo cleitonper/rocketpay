@@ -160,3 +160,35 @@ COPY --from=build --chown="${USER}":"${USER}" /app/scripts/*.sh "${HOME}/.local/
 COPY --from=build --chown="${USER}":"${USER}" /usr/local/bin/dockerize /usr/local/bin
 
 ENTRYPOINT "entrypoint.sh"
+
+
+
+# --------------------------------------------------------------------
+# Prometheus |~| Imagem
+# --------------------------------------------------------------------
+#
+# Prometheus é um banco de dados usado para armazenar métricas do
+# projeto, como uso do cpu, memória e do banco de daods. Sua inserção
+# no Dockerfile foi feita para evitar a criação de montagens de
+# associação (bind mounts).
+# _
+
+FROM prom/prometheus:v2.26.0 AS prometheus
+
+COPY docker/prometheus /etc/prometheus
+
+
+
+# --------------------------------------------------------------------
+# Grafana |~| Imagem
+# --------------------------------------------------------------------
+#
+# Grafana é uma ferramenta destinada a exibir as metricas coletadas
+# do projeto por meio de gráficos de fácil compreensão. Sua inserção
+# no Dockerfile foi feita para evitar a criação de montagens de
+# associação (bind mounts).
+# _
+
+FROM grafana/grafana:7.5.2 AS grafana
+
+COPY ./docker/grafana/ /etc/grafana/provisioning
