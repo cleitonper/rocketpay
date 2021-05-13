@@ -41,7 +41,5 @@ priv/plts/dialy*
 .git*
 
 # Docker
-docker
-!docker/scripts
-docker-compose.yml
+docker-compose*.yml
 Dockerfile
