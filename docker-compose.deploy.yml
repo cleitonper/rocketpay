@@ -15,3 +15,15 @@ services:
         limits:
           cpus: '0.5'
           memory: 1Gb
+
+volumes:
+  pgdata:
+    external: true
+    name: "fs-b54de201"
+
+networks:
+  default:
+    external: true
+    name: "sg-050e85439302b4f4c"
+
+x-aws-loadbalancer: arn:aws:elasticloadbalancing:us-east-1:688285194038:loadbalancer/net/rocketpay/b9e45ffad6192caf
