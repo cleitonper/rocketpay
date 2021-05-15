@@ -15,24 +15,3 @@ services:
         limits:
           cpus: '0.5'
           memory: 1Gb
-  prometheus:
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1Gb
-  postgres_exporter:
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1Gb
-  grafana:
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1Gb
