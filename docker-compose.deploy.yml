@@ -27,3 +27,12 @@ networks:
     name: "sg-050e85439302b4f4c"
 
 x-aws-loadbalancer: arn:aws:elasticloadbalancing:us-east-1:688285194038:loadbalancer/net/rocketpay/b9e45ffad6192caf
+
+x-aws-cloudformation:
+  Resources:
+    Cluster:
+      Properties:
+        ClusterName: rocketpay
+    ApiService:
+      Properties:
+        ServiceName: rocketpay-ApiService
