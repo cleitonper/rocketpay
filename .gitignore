@@ -41,3 +41,7 @@ priv/plts/dialy*
 .env.test
 .env.prod
 .env.production
+
+# ACT / Github Actions
+_actions
+workflow
