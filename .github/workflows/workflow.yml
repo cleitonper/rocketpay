@@ -146,3 +146,27 @@ jobs:
       - name: Run dialyzer
         env: {MIX_ENV: dev}
         run: mix dialyzer --no-check
+
+  deploy:
+    if: ${{ contains( github.ref, 'release/v' ) || contains( github.ref, 'tags/v' ) }}
+    needs: [ test, static_code_analysis ]
+    name: Trigger Deployment
+    runs-on: ubuntu-latest
+    environment: test
+
+    steps:
+      - name: Get version
+        id: version
+        run: |
+          echo "The new version is ${GITHUB_REF##*/v}"
+          echo ::set-output name=VERSION::${GITHUB_REF##*/v}
+
+      - name: Dispatch deployment
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/:repository/deployments
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          environment: production
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_TOKEN }}
