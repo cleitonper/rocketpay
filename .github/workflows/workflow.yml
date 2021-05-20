@@ -1,6 +1,10 @@
 name: Workflow
 
-on: push
+on:
+  push:
+    tags: [ v*.*.* ]
+    branches: [ main, release/v*.*.* ]
+    paths-ignore: [ 'docs/**', '*.md' ]
 
 env:
   PORT: ${{ secrets.PORT }}
