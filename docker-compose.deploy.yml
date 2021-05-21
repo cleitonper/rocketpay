@@ -2,6 +2,20 @@ version: '3.8'
 
 services:
   api:
+    environment:
+      PORT: 4000
+      HOST: localhost
+      SIGNING_SALT: ${SIGNING_SALT}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DB_URL: ${DB_URL}
+      DB_PORT: ${DB_PORT}
+      DB_HOSTNAME: ${DB_HOSTNAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      AUTH_USERNAME: ${AUTH_USERNAME}
+      AUTH_PASSWORD: ${AUTH_PASSWORD}
+      AUTH_SECRET: ${AUTH_SECRET}
     deploy:
       replicas: 1
       resources:
@@ -9,6 +23,11 @@ services:
           cpus: '0.5'
           memory: 1Gb
   postgres:
+    environment:
+      POSTGRES_DB: rocketpay
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_PORT: ${DB_PORT}
     deploy:
       replicas: 1
       resources:
