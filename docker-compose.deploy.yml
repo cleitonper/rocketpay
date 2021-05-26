@@ -3,8 +3,6 @@ version: '3.8'
 services:
   api:
     environment:
-      PORT: 4000
-      HOST: localhost
       SIGNING_SALT: ${SIGNING_SALT}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       DB_URL: ${DB_URL}

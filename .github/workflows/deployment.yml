@@ -12,8 +12,6 @@ env:
   CONTAINER_NAME: api
 
   # Application
-  PORT: ${{ secrets.PORT }}
-  HOST: ${{ secrets.HOST }}
   SIGNING_SALT: ${{ secrets.SIGNING_SALT }}
   SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
   DB_PORT: ${{ secrets.DB_PORT }}

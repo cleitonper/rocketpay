@@ -10,13 +10,6 @@ config :rocketpay, Rocketpay.Repo,
 
 # Web
 config :rocketpay, RocketpayWeb.Endpoint,
-  url: [
-    host: System.fetch_env!("HOST"),
-    port: System.fetch_env!("PORT")
-  ],
-  http: [
-    port: System.fetch_env!("PORT")
-  ],
   live_view: [
     signing_salt: System.fetch_env!("SIGNING_SALT")
   ],

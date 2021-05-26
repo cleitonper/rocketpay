@@ -170,8 +170,6 @@ A listagem a seguir enumera as variáveis de ambiente usadas no projeto:
 
 | Nome            | Descrição                   | Obrigatório  | Escopo                        | Padrão   |
 | --------------- | --------------------------- | ------------ | ----------------------------- | -------- |
-| PORT            | Porta de acesso             | Sim          | .env.{dev, production}, .env  | -        |
-| HOSTNAME        | Hostname do servidor        | Sim          | .env.{dev, production}        | -        |
 | SIGNING_SALT    | *Salt* de encriptação       | Sim          | .env.{dev, production}        | -        |
 | SECRET_KEY_BASE | Chave de criptografia       | Sim          | .env.{dev, production}        | -        |
 

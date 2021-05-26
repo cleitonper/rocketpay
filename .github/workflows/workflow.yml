@@ -7,8 +7,6 @@ on:
     paths-ignore: [ 'docs/**', '*.md' ]
 
 env:
-  PORT: ${{ secrets.PORT }}
-  HOST: ${{ secrets.HOST }}
   SIGNING_SALT: ${{ secrets.SIGNING_SALT }}
   SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
   DB_USERNAME: ${{ secrets.DB_USERNAME }}

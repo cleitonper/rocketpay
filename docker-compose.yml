@@ -5,7 +5,7 @@ services:
     image: ${AWS_ECR_URL:?required}/rocketpay:${APP_VERSION:-latest}
     env_file: .env.production
     ports:
-      - "${PORT:-80}:${PORT:-80}"
+      - "4000:4000"
     depends_on:
       - postgres
   postgres:
