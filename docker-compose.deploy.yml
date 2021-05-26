@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   api:
+    image: image: ${AWS_ECR_URL:?required}/rocketpay:${APP_VERSION:-latest}
     environment:
       SIGNING_SALT: ${SIGNING_SALT}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}

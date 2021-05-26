@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   api:
-    image: rocketpay:${APP_VERSION:-latest}
     container_name: api
     env_file: .env.dev
     build:

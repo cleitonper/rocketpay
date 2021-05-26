@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  api:
+    env_file: .env.production
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+      args:
+        ELIXIR_VERSION: ${ELIXIR_VERSION:-1.11-alpine}
+        USER: ${USER:-elixir}
+        GID: ${GID:-1000}
+        UID: ${UID:-1000}
