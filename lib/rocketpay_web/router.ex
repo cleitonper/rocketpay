@@ -3,6 +3,8 @@ defmodule RocketpayWeb.Router do
 
   import Plug.BasicAuth
 
+  @version Mix.Project.config()[:version]
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -62,7 +64,7 @@ defmodule RocketpayWeb.Router do
   def swagger_info do
     %{
       info: %{
-        version: "0.0.0",
+        version: @version,
         title: "Rocketpay",
         description: "Sistema para processamento de transações financeiras",
         contact: %{
