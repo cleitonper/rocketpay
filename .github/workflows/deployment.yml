@@ -1,6 +1,12 @@
 name: Deploy to Amazon ECS
 
-on: deployment
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to deploy
+        default: 'latest'
+        required: true
 
 env:
   # AWS
@@ -40,12 +46,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get version
-        id: get-version
-        run: |
-          echo "The new version is ${GITHUB_REF##*/v}"
-          echo ::set-output name=version::${GITHUB_REF##*/v}
-
       - name: Setup docker
         uses: ./.github/workflows/local/setup-docker
 
@@ -62,7 +62,7 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         env:
-          IMAGE_TAG: ${{ steps.get-version.outputs.version }}
+          IMAGE_TAG: ${{ env.VERSION }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: rocketpay
         run: |
@@ -82,4 +82,4 @@ jobs:
       - name: Push new version to aws
         run: docker compose -f docker-compose.yml -f docker-compose.deploy.yml up -d
         env:
-          APP_VERSION: ${{ steps.get-version.outputs.version }}
+          APP_VERSION: ${{ env.VERSION }}
