@@ -154,17 +154,23 @@ jobs:
 
     steps:
       - name: Get version
-        id: version
+        id: get-version
         run: |
           echo "The new version is ${GITHUB_REF##*/v}"
-          echo ::set-output name=VERSION::${GITHUB_REF##*/v}
+          echo ::set-output name=version::${GITHUB_REF##*/v}
+
+      - name: Generate payload
+        id: generate-payload
+        run: |
+          echo "The payload is { version: ${{ steps.get-version.outputs.version }} }"
+          echo ::set-output name=payload::'{ "version": "${{ steps.get-version.outputs.version }}" }'
 
       - name: Dispatch deployment
         uses: octokit/request-action@v2.x
         with:
-          route: POST /repos/:repository/deployments
+          route: POST /repos/:repository/actions/workflows/deployment.yml/dispatches
           repository: ${{ github.repository }}
+          inputs: ${{ steps.generate-payload.outputs.payload }}
           ref: ${{ github.ref }}
-          environment: production
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
