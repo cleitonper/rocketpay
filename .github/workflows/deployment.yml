@@ -82,4 +82,5 @@ jobs:
       - name: Push new version to aws
         run: docker compose -f docker-compose.yml -f docker-compose.deploy.yml up -d
         env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           APP_VERSION: ${{ github.event.inputs.version }}
