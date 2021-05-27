@@ -62,7 +62,7 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         env:
-          IMAGE_TAG: ${{ env.VERSION }}
+          IMAGE_TAG: ${{ github.event.inputs.version }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: rocketpay
         run: |
@@ -82,4 +82,4 @@ jobs:
       - name: Push new version to aws
         run: docker compose -f docker-compose.yml -f docker-compose.deploy.yml up -d
         env:
-          APP_VERSION: ${{ env.VERSION }}
+          APP_VERSION: ${{ github.event.inputs.version }}
