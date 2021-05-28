@@ -21,23 +21,6 @@ services:
         limits:
           cpus: '0.5'
           memory: 1Gb
-  postgres:
-    environment:
-      POSTGRES_DB: rocketpay
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS}
-      POSTGRES_PORT: ${DB_PORT}
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1Gb
-
-volumes:
-  pgdata:
-    external: true
-    name: "fs-b54de201"
 
 networks:
   default:
