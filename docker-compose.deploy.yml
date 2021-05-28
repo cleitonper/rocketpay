@@ -15,6 +15,9 @@ services:
       AUTH_USERNAME: ${AUTH_USERNAME}
       AUTH_PASSWORD: ${AUTH_PASSWORD}
       AUTH_SECRET: ${AUTH_SECRET}
+    ports:
+      - target: 4000
+        x-aws-protocol: http
     deploy:
       replicas: 1
       resources:
