@@ -46,6 +46,21 @@ x-aws-cloudformation:
         HealthCheckPath: /api/index.html
         Matcher:
           HttpCode: 200-399
+    Api80Listener:
+      Type: AWS::ElasticLoadBalancingV2::Listener
+      Properties:
+        LoadBalancerArn: arn:aws:elasticloadbalancing:us-east-1:688285194038:loadbalancer/app/rocketpay/c7db50ddd3350f2e
+        Protocol: HTTP
+        Port: 80
+        DefaultActions:
+          - Type: redirect
+            RedirectConfig:
+              Host: '#{host}'
+              Path: '/#{path}'
+              Port: 443
+              Protocol: HTTPS
+              Query: '#{query}'
+              StatusCode: HTTP_301
     Api443Listener:
       Type: AWS::ElasticLoadBalancingV2::Listener
       Properties:
