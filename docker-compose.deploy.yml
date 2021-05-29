@@ -46,3 +46,18 @@ x-aws-cloudformation:
         HealthCheckPath: /api/index.html
         Matcher:
           HttpCode: 200-399
+    Api443Listener:
+      Type: AWS::ElasticLoadBalancingV2::Listener
+      Properties:
+        LoadBalancerArn: arn:aws:elasticloadbalancing:us-east-1:688285194038:loadbalancer/app/rocketpay/c7db50ddd3350f2e
+        Protocol: HTTPS
+        Port: 443
+        SslPolicy: ELBSecurityPolicy-2016-08
+        Certificates:
+          - CertificateArn: arn:aws:acm:us-east-1:688285194038:certificate/a46c3c8f-9f69-44dd-a3ef-1915880ffef6
+        DefaultActions:
+          - Type: forward
+            ForwardConfig:
+              TargetGroups:
+                - TargetGroupArn:
+                    Ref: Api4000TargetGroup
