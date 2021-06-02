@@ -82,7 +82,6 @@ defmodule RocketpayWeb.Router do
       },
       consumes: ["application/json"],
       produces: ["application/json"],
-      schemes: ["http", "https"],
       basePath: "/api"
     }
   end
