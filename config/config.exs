@@ -12,10 +12,6 @@ config :rocketpay, Rocketpay.Repo,
 # Web
 config :rocketpay, RocketpayWeb.Endpoint,
   pubsub_server: Rocketpay.PubSub,
-  url: [
-    host: "localhost",
-    port: 4000
-  ],
   http: [
     port: 4000
   ],
