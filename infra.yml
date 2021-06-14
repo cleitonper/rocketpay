@@ -1,0 +1,454 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: Select a VPC that allows instances to access the Internet.
+  SubnetId:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Select at two subnets in your selected VPC.
+  DomainName:
+    Type: String
+    Description: >
+      The Fully Qualified Domain Name (FQDN) to request a SSL/TLS Certificate.
+      You can use a wildcard (*) to request a certificate for many subdomanins.
+      For example: *.webapp.com will request a certificate for www.webapp.com
+      and api.webapp.com and so on.
+  DesiredCapacity:
+    Type: Number
+    Default: "1"
+    Description: Number of instances to launch in your ECS cluster.
+  MaxSize:
+    Type: Number
+    Default: "2"
+    Description: Maximum number of instances that can be launched in your ECS cluster.
+  EnvironmentFile:
+    Type: String
+    Description: The Amazon Resource Name (ARN) of an .env file stored in a s3 bucket.
+  InstanceType:
+    Type: String
+    Description: EC2 instance type
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+      - m3.medium
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+      - m4.10xlarge
+      - c4.large
+      - c4.xlarge
+      - c4.2xlarge
+      - c4.4xlarge
+      - c4.8xlarge
+      - c3.large
+      - c3.xlarge
+      - c3.2xlarge
+      - c3.4xlarge
+      - c3.8xlarge
+      - r3.large
+      - r3.xlarge
+      - r3.2xlarge
+      - r3.4xlarge
+      - r3.8xlarge
+      - i2.xlarge
+      - i2.2xlarge
+      - i2.4xlarge
+      - i2.8xlarge
+    ConstraintDescription: Please choose a valid instance type.
+  DatabaseUsername:
+    Type: String
+    Description: Type a login ID for the master user of your DB instance.
+  DatabasePassword:
+    NoEcho: true
+    Type: String
+    Description: Type a password for the master user of your DB instance.
+  DatabaseType:
+    Type: String
+    Description: Choose a DB instance class.
+    Default: db.t2.micro
+    AllowedValues:
+      - db.t2.micro
+      - db.t2.small
+      - db.t2.medium
+      - db.t2.large
+      - db.t2.xlarge
+      - db.t2.2xlarge
+      - db.t3.micro
+      - db.t3.small
+      - db.t3.medium
+      - db.t3.large
+      - db.t3.xlarge
+      - db.t3.2xlarge
+    ConstraintDescription: Please choose a valid instance type.
+  Image:
+    Type: String
+    Description: The image containing the application.
+Mappings:
+  AWSRegionToAMI:
+    us-east-1:
+      AMIID: ami-01146a2120f5af1c5
+    us-east-2:
+      AMIID: ami-05f074075b6f667c0
+    us-west-1:
+      AMIID: ami-08850e7f1d87d3e1c
+    us-west-2:
+      AMIID: ami-063ffacdfca60f249
+    sa-east-1:
+      AMIID: ami-08d8d510618560f82
+Resources:
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Ref AWS::StackName
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref VpcId
+      GroupName: !Ref AWS::StackName
+      GroupDescription: !Join [ "", [ !Ref AWS::StackName, " ", "security group" ] ]
+      SecurityGroupIngress:
+        - Description: HTTP IPv4
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - Description: HTTP IPv6
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIpv6: ::/0
+        - Description: HTTPS IPv4
+          IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - Description: HTTPS IPv6
+          IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIpv6: ::/0
+  SecurityGroupPostgresInbound:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      Description: PostgreSQL internal traffic
+      GroupId: !Ref SecurityGroup
+      SourceSecurityGroupId: !Ref SecurityGroup
+      IpProtocol: tcp
+      FromPort: 5432
+      ToPort: 5432
+  SecurityGroup4000Inbound:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      Description: TCP internal traffic for healthchecks
+      GroupId: !Ref SecurityGroup
+      SourceSecurityGroupId: !Ref SecurityGroup
+      IpProtocol: tcp
+      FromPort: 4000
+      ToPort: 4000
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      RetentionInDays: 7
+      LogGroupName: !Ref AWS::StackName
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      NetworkMode: awsvpc
+      ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      RequiresCompatibilities:
+        - EC2
+      ContainerDefinitions:
+        - Name: !Ref AWS::StackName
+          Image: !Ref Image
+          Essential: true
+          MemoryReservation: 128
+          EnvironmentFiles:
+            - Type: s3
+              Value: !Ref EnvironmentFile
+          PortMappings:
+            - ContainerPort: 4000
+              HostPort: 4000
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref LogGroup
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: !Ref AWS::StackName
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
+      Name: !Ref AWS::StackName
+      Scheme: internet-facing
+      Subnets: !Ref SubnetId
+      SecurityGroups: [ !Ref SecurityGroup ]
+  LoadBalancerHTTPSListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      Port: 443
+      Protocol: HTTPS
+      LoadBalancerArn: !Ref LoadBalancer
+      SslPolicy: ELBSecurityPolicy-2016-08
+      Certificates:
+        - CertificateArn: !Ref Certificate
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+  LoadBalancerHTTPListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      LoadBalancerArn: !Ref LoadBalancer
+      DefaultActions:
+        - Type: redirect
+          RedirectConfig:
+            Protocol: HTTPS
+            Host: "#{host}"
+            Port: "443"
+            Path: /#{path}
+            Query: "#{query}"
+            StatusCode: HTTP_301
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn: LoadBalancer
+    Properties:
+      Name: !Ref AWS::StackName
+      VpcId: !Ref VpcId
+      TargetType: ip
+      Protocol: HTTP
+      Port: 4000
+      HealthCheckPath: /api/index.html
+      HealthCheckProtocol: HTTP
+      HealthCheckPort: '4000'
+      HealthyThresholdCount: 2
+      HealthCheckIntervalSeconds: 10
+      HealthCheckTimeoutSeconds: 5
+      UnhealthyThresholdCount: 2
+      Matcher:
+        HttpCode: 200-399
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      ValidationMethod: DNS
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: !Ref AWS::StackName
+      VPCZoneIdentifier: !Ref SubnetId
+      DesiredCapacity: !Ref DesiredCapacity
+      MaxSize: !Ref MaxSize
+      MinSize: "1"
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT15M
+    UpdatePolicy:
+      AutoScalingReplacingUpdate:
+        WillReplace: true
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Ref AWS::StackName
+      LaunchTemplateData:
+        InstanceType: !Ref InstanceType
+        IamInstanceProfile:
+          Arn: !GetAtt EC2InstanceProfile.Arn
+        SecurityGroupIds:
+          - !Ref SecurityGroup
+        ImageId: !FindInMap
+          - AWSRegionToAMI
+          - !Ref AWS::Region
+          - AMIID
+        UserData: !Base64
+          Fn::Join:
+            - ""
+            - - |
+                #!/bin/bash -xe
+              - echo ECS_CLUSTER=
+              - !Ref Cluster
+              - |2
+                  >> /etc/ecs/ecs.config
+              - |
+                yum install -y aws-cfn-bootstrap
+              - "/opt/aws/bin/cfn-signal -e $? "
+              - "         --stack "
+              - !Ref AWS::StackName
+              - "         --resource AutoScalingGroup "
+              - "         --region "
+              - !Ref AWS::Region
+              - |+
+
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn:
+      - LoadBalancerHTTPListener
+      - LoadBalancerHTTPSListener
+    Properties:
+      ServiceName: !Ref AWS::StackName
+      Cluster: !Ref Cluster
+      TaskDefinition: !Ref TaskDefinition
+      DesiredCount: 1
+      LaunchType: EC2
+      SchedulingStrategy: REPLICA
+      DeploymentController:
+        Type: ECS
+      DeploymentConfiguration:
+        MaximumPercent: 100
+        MinimumHealthyPercent: 0
+      LoadBalancers:
+        - ContainerName: !Ref AWS::StackName
+          TargetGroupArn: !Ref TargetGroup
+          ContainerPort: 4000
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          SecurityGroups: [ !Ref SecurityGroup ]
+          Subnets: !Ref SubnetId
+  ServiceScalingTarget:
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    Properties:
+      ScalableDimension: ecs:service:DesiredCount
+      ServiceNamespace: ecs
+      MaxCapacity: 2
+      MinCapacity: 1
+      RoleARN: !GetAtt AutoscalingRole.Arn
+      ResourceId: !Join [ "", [ "service", "/", !Ref Cluster, "/", !GetAtt Service.Name ] ]
+  ServiceScalingPolicy:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyType: StepScaling
+      PolicyName: !Ref AWS::StackName
+      ScalingTargetId: !Ref ServiceScalingTarget
+      StepScalingPolicyConfiguration:
+        AdjustmentType: PercentChangeInCapacity
+        MetricAggregationType: Average
+        Cooldown: 60
+        StepAdjustments:
+          - MetricIntervalLowerBound: 0
+            ScalingAdjustment: 200
+  LoadBalancer500sAlarmScaleUp:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      Period: 60
+      Threshold: 10
+      EvaluationPeriods: 1
+      Statistic: Average
+      AlarmDescription: Alarm if our ALB generates too many HTTP 500s.
+      ComparisonOperator: GreaterThanThreshold
+      MetricName: HTTPCode_ELB_5XX_Count
+      Namespace: !Join [ "", [ "aws", "/", !Ref AWS::StackName ] ]
+      Dimensions:
+        - Name: LoadBalancer
+          Value: !GetAtt LoadBalancer.LoadBalancerFullName
+      AlarmActions:
+        - !Ref ServiceScalingPolicy
+  EC2Role:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action:
+              - "sts:AssumeRole"
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+      Policies:
+        - PolicyName: !Join [ "", [ !Ref AWS::StackName, "-ec2-role" ] ]
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Resource: "*"
+                Action:
+                  - "ecs:CreateCluster"
+                  - "ecs:DeregisterContainerInstance"
+                  - "ecs:DiscoverPollEndpoint"
+                  - "ecs:Poll"
+                  - "ecs:RegisterContainerInstance"
+                  - "ecs:StartTelemetrySession"
+                  - "ecs:Submit*"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+  AutoscalingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action:
+              - "sts:AssumeRole"
+            Principal:
+              Service:
+                - application-autoscaling.amazonaws.com
+      Policies:
+        - PolicyName: !Join [ "", [ !Ref AWS::StackName, "-autoscaling-role" ] ]
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Resource: "*"
+                Action:
+                  - "application-autoscaling:*"
+                  - "cloudwatch:DescribeAlarms"
+                  - "cloudwatch:PutMetricAlarm"
+                  - "ecs:DescribeServices"
+                  - "ecs:UpdateService"
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles:
+        - !Ref EC2Role
+  TaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - sts:AssumeRole
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+  Database:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName: !Ref AWS::StackName
+      DBInstanceIdentifier: !Ref AWS::StackName
+      DBInstanceClass: !Ref DatabaseType
+      MasterUsername: !Ref DatabaseUsername
+      MasterUserPassword: !Ref DatabasePassword
+      VPCSecurityGroups: [ !Ref SecurityGroup ]
+      PubliclyAccessible: false
+      EnablePerformanceInsights: false
+      BackupRetentionPeriod: 0
+      Engine: Postgres
+      EngineVersion: '12.5'
+      AllocatedStorage: '20'
+      StorageType: gp2
+      MultiAZ: false
+Outputs:
+  Service:
+    Value: !Ref Service
+  Cluster:
+    Value: !Ref Cluster
+  LoadBalancer:
+    Description: LoadBalancer URL
+    Value: !GetAtt LoadBalancer.DNSName
+  TaskDefinition:
+    Value: !Ref TaskDefinition
