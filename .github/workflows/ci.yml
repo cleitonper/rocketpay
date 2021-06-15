@@ -1,4 +1,4 @@
-name: Workflow
+name: Continous Integration
 
 on:
   push:
@@ -168,7 +168,7 @@ jobs:
       - name: Dispatch deployment
         uses: octokit/request-action@v2.x
         with:
-          route: POST /repos/:repository/actions/workflows/deployment.yml/dispatches
+          route: POST /repos/:repository/actions/workflows/cd.yml/dispatches
           repository: ${{ github.repository }}
           inputs: ${{ steps.generate-payload.outputs.payload }}
           ref: ${{ github.ref }}

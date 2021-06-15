@@ -1,4 +1,4 @@
-name: Deploy to Amazon ECS
+name: Continous Delivery
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ defaults:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy to AWS
     runs-on: ubuntu-latest
     environment: deployment
     permissions:
