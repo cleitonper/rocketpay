@@ -65,7 +65,11 @@ jobs:
 
       - name: Download task definition
         id: download-task-def
-        run: aws --output json ecs describe-task-definition --task-definition $APP_NAME --query taskDefinition > task-definition.json
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition $APP_NAME \
+            --query taskDefinition > task-definition.json
+          echo "::set-output name=revision::$(cat task-definition.json | jq .revision)"
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -82,3 +86,8 @@ jobs:
           service: ${{ env.APP_NAME }}
           cluster: ${{ env.APP_NAME }}
           wait-for-service-stability: true
+
+      - name: De-register previous revision
+        run: |
+          aws ecs deregister-task-definition \
+            --task-definition ${{ env.APP_NAME }}:${{ steps.download-task-def.outputs.revision }}
