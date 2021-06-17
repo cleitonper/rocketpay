@@ -52,15 +52,6 @@ defmodule RocketpayWeb.Router do
       swagger_file: "swagger.json"
   end
 
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery, :auth]
-      live_dashboard "/dashboard", metrics: RocketpayWeb.Telemetry
-    end
-  end
-
   def swagger_info do
     %{
       info: %{

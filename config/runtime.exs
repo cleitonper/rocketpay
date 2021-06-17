@@ -10,9 +10,6 @@ config :rocketpay, Rocketpay.Repo,
 
 # Web
 config :rocketpay, RocketpayWeb.Endpoint,
-  live_view: [
-    signing_salt: System.fetch_env!("SIGNING_SALT")
-  ],
   secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
 
 # Authentication

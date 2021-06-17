@@ -5,11 +5,6 @@ defmodule RocketpayWeb.Endpoint do
     websocket: true,
     longpoll: false
 
-  socket "/live", Phoenix.LiveView.Socket,
-    websocket: [
-      connect_info: [session: {RocketpayWeb.Session, :options, []}]
-    ]
-
   plug Plug.Static,
     at: "/",
     from: :rocketpay,
@@ -20,8 +15,6 @@ defmodule RocketpayWeb.Endpoint do
     plug Phoenix.CodeReloader
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :rocketpay
   end
-
-  plug Phoenix.LiveDashboard.RequestLogger, param_key: "request_logger"
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
