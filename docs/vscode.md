@@ -23,7 +23,7 @@ Ao seguir as instruções descritas aqui, seu editor será capaz de:
     * No seu editor, pressione `CTRL` + `SHIFT` + `P`
     * Pesquise por **Remote-Containers: Open Folder In Container** e pressione `ENTER`
     * Selecione a pasta do projeto e aguarde até que o container seja executado
-    * Acesse o projeto em http://localhost:4000/api/
+    * Acesse o projeto em http://localhost:4000/
 
 ___
 
@@ -78,7 +78,7 @@ Finalizados os passos anteriores, é hora de executar o editor dentro do *contai
   * Pressione `CTRL` + `SHIFT` + `P`
   * Pesquise por **Remote-Containers: Open Folder In Container** e pressione `ENTER`
   * Selecione a pasta do projeto e aguarde até que o container seja executado
-  * Acesse o projeto em http://localhost:4000/api/
+  * Acesse o projeto em http://localhost:4000/
 
 **Atenção!** Além dos passos 1 à 4 descritos neste guia, é necessário também que o comando `docker-compose build` já tenha sido executado.
 

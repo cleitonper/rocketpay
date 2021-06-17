@@ -22,7 +22,7 @@ defmodule RocketpayWeb.Router do
     plug Rocketpay.Auth.Owner
   end
 
-  scope "/api", RocketpayWeb do
+  scope "/", RocketpayWeb do
     pipe_through :api
 
     post "/auth/login", AuthController, :login
@@ -31,13 +31,13 @@ defmodule RocketpayWeb.Router do
     post "/users", UsersController, :create
   end
 
-  scope "/api", RocketpayWeb do
+  scope "/", RocketpayWeb do
     pipe_through [:api, :authenticated]
 
     put "/accounts/:id/deposit", AccountsController, :deposit
   end
 
-  scope "/api", RocketpayWeb do
+  scope "/", RocketpayWeb do
     pipe_through [:api, :authenticated, :owner]
 
     get "/users/:id", UsersController, :show
@@ -46,7 +46,7 @@ defmodule RocketpayWeb.Router do
     put "/accounts/transaction", AccountsController, :transaction
   end
 
-  scope "/api" do
+  scope "/" do
     forward "/", PhoenixSwagger.Plug.SwaggerUI,
       otp_app: :rocketpay,
       swagger_file: "swagger.json"
@@ -81,8 +81,7 @@ defmodule RocketpayWeb.Router do
         }
       },
       consumes: ["application/json"],
-      produces: ["application/json"],
-      basePath: "/api"
+      produces: ["application/json"]
     }
   end
 end

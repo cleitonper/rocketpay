@@ -38,7 +38,7 @@ defmodule Rocketpay.Auth.Owner do
     {:ok, resource}
   end
 
-  defp get_resource_name(%Plug.Conn{path_info: [_api, name | _others]}), do: String.slice(name, 0..-2)
+  defp get_resource_name(%Plug.Conn{path_info: [name | _others]}), do: String.slice(name, 0..-2)
   defp get_resource_id(%Plug.Conn{params: %{"from" => id}}), do: id
   defp get_resource_id(%Plug.Conn{params: %{"id" => id}}), do: id
 

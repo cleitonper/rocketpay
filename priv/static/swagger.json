@@ -1,5 +1,4 @@
 {
-  "basePath": "/api",
   "consumes": [
     "application/json"
   ],
