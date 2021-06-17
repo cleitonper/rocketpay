@@ -159,7 +159,7 @@ A listagem a seguir enumera as variáveis de ambiente usadas no projeto:
 | DB_POOL_SIZE      | Número de conexões ativas   | Não          | .env.dev            | 10       |
 | DB_URL            | Endereço de acesso          | Sim          | .env.production     | -        |
 | POSTGRES_PORT     | Porta de acesso             | Não          | docker/postgres/.env.{dev,production}, .env  | 5432     |
-| POSTGRES_USER     | Nome de usuário             | Sim          | docker/postgres/.env.{dev,production}, .env  | -        |
+| POSTGRES_USER     | Nome de usuário             | Não          | docker/postgres/.env.{dev,production}, .env  | postgres |
 | POSTGRES_PASSWORD | Senha de acesso             | Sim          | docker/postgres/.env.{dev,production} | -        |
 | POSTGRES_DB       | Nome do banco de dados      | Sim          | docker/postgres/.env.{dev,production} | -        |
 

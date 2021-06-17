@@ -15,6 +15,7 @@ ___
   * [Ambiente de desenvolvimento](#ambiente-de-desenvolvimento)
   * [Testes automatizados](#testes-automatizados)
   * [Build de produção](#build-de-produção)
+  * [Implantação](#implantação)
   * [Documentação relacionada](#documentação-relacionada)
 
 ___
@@ -87,6 +88,16 @@ $ docker-compose -f docker-compose.yml build
 # Execute a aplicação
 $ docker-compose -f docker-compose.yml up
 ```
+
+
+## Implantação
+A implantação no ambiente de produção é feita de forma automatizada utilizando `workflows` do [Github Actions](https://github.com/features/actions). Para que a uma plantação seja feita, os seguintes critérios devem ser atendidos:
+
+  * Deve ser feito o *push* de um *branch* ou *tag* em um formato especifico.
+  * **Branches** devem seguir o formato `release/v*.*.*`. Por exemplo: `release/v1.0.0`.
+  * **Tags** devem seguir o formato `v*.*.*`. Por exemplo: `v1.0.0`.
+  * Os testes automatizados definidos no *workflow* [Continous Integration](.github/workflows/ci.yml) devem ser executados sem falhas.
+  * Atendidos os requisitos acima, a implantação ocorrerá no *workflow* [Continous Delivery](.github/workflows/cd.yml). Caso não ocorra nenhuma falha durante o processo, uma nova versão contendo as mudanças do commit atual será implantada no ambiente configurado.
 
 
 ## Documentação relacionada
