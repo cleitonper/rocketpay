@@ -1,19 +1,16 @@
 {
-	"name": "Rocketpay",
-	"service": "api",
-	"workspaceFolder": "/workspace",
+  "name": "Rocketpay",
+  "service": "api",
+  "runServices": ["api", "postgres"],
+  "workspaceFolder": "${localEnv:HOME}/app",
 
-	"dockerComposeFile": [
-		"../docker-compose.yml",
-		"docker-compose.yml"
-	],
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "../docker-compose.override.yml"
+  ],
 
-	"settings": {
-		"terminal.integrated.shell.linux": "/bin/ash"
-	},
-
-	"extensions": [
-		"JakeBecker.elixir-ls",
-		"iampeterbanjo.elixirlinter"
-	]
+  "extensions": [
+    "JakeBecker.elixir-ls",
+    "iampeterbanjo.elixirlinter"
+  ]
 }
