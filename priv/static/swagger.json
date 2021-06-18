@@ -105,7 +105,7 @@
     },
     "description": "Sistema para processamento de transações financeiras",
     "title": "Rocketpay",
-    "version": "0.0.0"
+    "version": "1.0.0"
   },
   "paths": {
     "/accounts/transaction": {
