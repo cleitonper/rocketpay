@@ -226,7 +226,7 @@ Resources:
       TargetType: ip
       Protocol: HTTP
       Port: 4000
-      HealthCheckPath: /index.html
+      HealthCheckPath: /swagger/index.html
       HealthCheckProtocol: HTTP
       HealthCheckPort: '4000'
       HealthyThresholdCount: 2

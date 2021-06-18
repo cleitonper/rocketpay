@@ -1,6 +1,7 @@
 defmodule RocketpayWeb.Router do
   use RocketpayWeb, :router
 
+  import Redirect
   import Plug.BasicAuth
 
   @version Mix.Project.config()[:version]
@@ -46,11 +47,11 @@ defmodule RocketpayWeb.Router do
     put "/accounts/transaction", AccountsController, :transaction
   end
 
-  scope "/" do
-    forward "/", PhoenixSwagger.Plug.SwaggerUI,
-      otp_app: :rocketpay,
-      swagger_file: "swagger.json"
-  end
+  forward "/swagger", PhoenixSwagger.Plug.SwaggerUI,
+    otp_app: :rocketpay,
+    swagger_file: "swagger.json"
+
+  redirect "/", "/swagger", :permanent
 
   def swagger_info do
     %{
