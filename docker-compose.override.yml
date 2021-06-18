@@ -57,6 +57,8 @@ services:
   postgres:
     container_name: postgres
     env_file: ./docker/postgres/.env.dev
+    environment:
+      POSTGRES_DB: rocketpay_dev
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
       interval: 30s

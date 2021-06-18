@@ -161,7 +161,6 @@ A listagem a seguir enumera as variáveis de ambiente usadas no projeto:
 | POSTGRES_PORT     | Porta de acesso             | Não          | docker/postgres/.env.{dev,production}, .env  | 5432     |
 | POSTGRES_USER     | Nome de usuário             | Não          | docker/postgres/.env.{dev,production}, .env  | postgres |
 | POSTGRES_PASSWORD | Senha de acesso             | Sim          | docker/postgres/.env.{dev,production} | -        |
-| POSTGRES_DB       | Nome do banco de dados      | Sim          | docker/postgres/.env.{dev,production} | -        |
 
 **Atenção!** Apesar de terem que ser preenchidas em arquivos diferentes, as variáveis prefixadas com `DB_` e `POSTGRES_` devem possuir o mesmo valor quando se referirem ao mesmo tipo de configuração.
 

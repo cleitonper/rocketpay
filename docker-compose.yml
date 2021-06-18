@@ -12,6 +12,7 @@ services:
     env_file: ./docker/postgres/.env.production
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: rocketpay
     volumes:
       - pgdata:/var/lib/postgresql/data/pgdata
     command: -p ${POSTGRES_PORT:-5432}
